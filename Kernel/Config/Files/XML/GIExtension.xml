@@ -11,4 +11,26 @@
             </Hash>
         </Value>
     </Setting>
+    <Setting Name="GenericInterface::Operation::Module###CustomerUser::DynamicFieldUpdate" Required="0" Valid="1">
+        <Description Translatable="1">GenericInterface module registration for the operation layer.</Description>
+        <Navigation>GenericInterface::Operation::ModuleRegistration</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Name">DynamicFieldUpdate</Item>
+                <Item Key="Controller">CustomerUser</Item>
+                <Item Key="ConfigDialog">AdminGenericInterfaceOperationDefault</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="GenericInterface::Operation::Module###CustomerCompany::DynamicFieldUpdate" Required="0" Valid="1">
+        <Description Translatable="1">GenericInterface module registration for the operation layer.</Description>
+        <Navigation>GenericInterface::Operation::ModuleRegistration</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Name">DynamicFieldUpdate</Item>
+                <Item Key="Controller">CustomerCompany</Item>
+                <Item Key="ConfigDialog">AdminGenericInterfaceOperationDefault</Item>
+            </Hash>
+        </Value>
+    </Setting>
 </otrs_config>

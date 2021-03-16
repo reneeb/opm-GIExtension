@@ -11,6 +11,10 @@
     <License>GNU AFFERO GENERAL PUBLIC LICENSE Version 3, November 2007</License>
     <Filelist>
         <File Permission="644" Location="Kernel/Config/Files/XML/GIExtension.xml" />
+        <File Permission="644" Location="Kernel/GenericInterface/Operation/CustomerCompany/Common.pm" />
+        <File Permission="644" Location="Kernel/GenericInterface/Operation/CustomerCompany/DynamicFieldUpdate.pm" />
+        <File Permission="644" Location="Kernel/GenericInterface/Operation/CustomerUser/Common.pm" />
+        <File Permission="644" Location="Kernel/GenericInterface/Operation/CustomerUser/DynamicFieldUpdate.pm" />
         <File Permission="644" Location="Kernel/GenericInterface/Operation/Ticket/TicketGetFiltered.pm" />
     </Filelist>
 </otrs_package>
