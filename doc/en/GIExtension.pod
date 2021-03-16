@@ -1,0 +1,80 @@
+=head1 GIExtension
+
+This is a library with additional GenericInterface operations.
+
+Those operations include
+
+=head2 Ticket::TicketGetFiltered
+
+You can use this as a drop-in replacement for TicketGet. Additionally
+you can write filters to change the returned values.
+
+For our L<GroupRestrictedDynamicFields|https://feature-addons.de/znuny/Ticket/GroupRestrictedDynamicFields> addon,
+we wrote a filter to remove the dynamic fields for those users who do not have the permission to see them.
+
+Those filters are simple Perl modules. You have to activate them via system configuration:
+
+    <Setting Name="GIExtension::TicketFilter###001-MyFilter" Required="0" Valid="1">
+        <Description Translatable="1">A filter for GIExtensions.</Description>
+        <Navigation>GenericInterface::Filter</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::GenericInterface::Filter::MyFilter</Item>
+            </Hash>
+        </Value>
+    </Setting>
+
+And the module looks like:
+
+    package Kernel::GenericInterface::Filter::MyFilter;
+    
+    use strict;
+    use warnings;
+    
+    our @ObjectDependencies = qw(
+        Kernel::System::Log
+    );
+    
+    sub new {
+        my ($Type, %Param) = @_;
+    
+        my $Self = bless {}, $Type;
+    
+        return $Self;
+    }
+    
+    sub Run {
+        my ($Self, %Param) = @_;
+    
+        # maybe remove some fields from $Param{Ticket}
+        # %Param has the return values you can see for
+        # the TicketGet operation
+    
+        return $Param{Ticket};
+    }
+    
+    1;
+
+=head2 CustomerUser::DynamicFieldUpdate
+
+Allows agents to update a dynamic field for a customer user
+
+To use it, select this operation as a controller for the GenericInterface provider.
+Then configure the provider and use e.g. I</CustomerUser/:CustomerUserID> for the
+route mapping.
+
+Then you can send this JSON to your OTRS:
+
+    {
+    	"UserLogin": "an_agent",
+    	"Password": "agents_password",
+    	"DynamicField": [{
+    		"Name": "my_dynamic_field",
+    		"Value": "new_value"
+    	}]
+    }
+
+=head2 CustomerCompany::DynamicFieldUpdate
+
+Similar to the I<CustomerUser::DynamicFieldUpdate> operation, but for customers.
+
