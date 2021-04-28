@@ -78,3 +78,10 @@ Then you can send this JSON to your OTRS:
 
 Similar to the I<CustomerUser::DynamicFieldUpdate> operation, but for customers.
 
+=head2 CustomerUser::CustomerUserAdd
+
+Allows agents to add new customer users
+
+=head2 User::UserAdd
+
+Allows agents to create new agents
