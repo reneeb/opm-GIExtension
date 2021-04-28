@@ -119,11 +119,7 @@ sub _CheckUser {
     my $ValidObject     = $Kernel::OM->Get('Kernel::System::Valid');
 
     # check email address
-    if (
-        !$CheckItemObject->CheckEmail( Address => $Param{UserEmail} )
-        && grep { $_ eq $Param{ValidID} } $ValidObject->ValidIDsGet()
-        )
-    {
+    if ( !$CheckItemObject->CheckEmail( Address => $Param{UserEmail} ) ) {
         return {
             ErrorCode    => $Self->{DebugPrefix} . '.UserEmail invalid',
             ErrorMessage => "Email address ($Param{UserEmail}) not valid",
