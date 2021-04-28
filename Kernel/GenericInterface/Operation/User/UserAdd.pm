@@ -164,6 +164,33 @@ sub Run {
         );
     }
 
+    my $CanAddUsers = 0;
+
+    my $ConfigObject = $Kernel::OM->Get('Kernel::Config'); 
+    my $GroupObject  = $Kernel::OM->Get('Kernel::System::Group'); 
+    my $AdminUser    = $ConfigObject->Get('Frontend::Module')->{AdminUser};
+
+    GROUPNAME:
+    for my $GroupName ( @{ $AdminUser->{Group} || [] } ) {
+        my $HasPermission = $GroupObject->PermissionCheck(
+            UserID    => $ChangeUserID,
+            GroupName => $GroupName,
+            Type      => 'rw',
+        );
+
+        if ( $HasPermission ) {
+            $CanAddUsers = 1;
+            last GROUPNAME;
+        }
+    }
+
+    if ( !$CanAddUsers ) {
+        return $Self->ReturnError(
+            ErrorCode    => $Self->{DebugPrefix} . '.AuthFail',
+            ErrorMessage => $Self->{DebugPrefix} . ": User could not be authenticated!",
+        );
+    }
+
     # check needed array/hashes
     for my $Needed (qw(User)) {
         if (
