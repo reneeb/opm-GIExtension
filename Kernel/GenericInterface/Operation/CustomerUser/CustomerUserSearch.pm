@@ -157,9 +157,9 @@ sub Run {
         )
     {
         return $Self->ReturnError(
-            ErrorCode => "$Self->{OperationName}.MissingParameter",
+            ErrorCode => "$Self->{DebugPrefix}.MissingParameter",
             ErrorMessage =>
-                "$Self->{OperationName}: UserLogin or SessionID is required!",
+                "$Self->{DebugPrefix}: UserLogin or SessionID is required!",
         );
     }
 
@@ -168,8 +168,8 @@ sub Run {
         if ( !$Param{Data}->{Password} )
         {
             return $Self->ReturnError(
-                ErrorCode    => "$Self->{OperationName}.MissingParameter",
-                ErrorMessage => "$Self->{OperationName}: Password or SessionID is required!",
+                ErrorCode    => "$Self->{DebugPrefix}.MissingParameter",
+                ErrorMessage => "$Self->{DebugPrefix}: Password or SessionID is required!",
             );
         }
     }
@@ -186,8 +186,8 @@ sub Run {
 
     if ( !$UserID ) {
         return $Self->ReturnError(
-            ErrorCode    => "$Self->{OperationName}.AuthFail",
-            ErrorMessage => "$Self->{OperationName}: User could not be authenticated!",
+            ErrorCode    => "$Self->{DebugPrefix}.AuthFail",
+            ErrorMessage => "$Self->{DebugPrefix}: User could not be authenticated!",
         );
     }
 
@@ -196,9 +196,9 @@ sub Run {
     for my $Needed (qw(CustomerUser)) {
         if ( !IsHashRefWithData( $Param{Data}->{$Needed} ) ) {
             return $Self->ReturnError(
-                ErrorCode => "$Self->{OperationName}.MissingParameter",
+                ErrorCode => "$Self->{DebugPrefix}.MissingParameter",
                 ErrorMessage =>
-                    "$Self->{OperationName}: $Needed parameter is missing or not valid!",
+                    "$Self->{DebugPrefix}: $Needed parameter is missing or not valid!",
             );
         }
     }

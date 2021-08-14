@@ -111,9 +111,9 @@ sub Run {
         )
     {
         return $Self->ReturnError(
-            ErrorCode => "$Self->{OperationName}.MissingParameter",
+            ErrorCode => "$Self->{DebugPrefix}.MissingParameter",
             ErrorMessage =>
-                "$Self->{OperationName}: UserLogin or SessionID is required!",
+                "$Self->{DebugPrefix}: UserLogin or SessionID is required!",
         );
     }
 
@@ -122,8 +122,8 @@ sub Run {
         if ( !$Param{Data}->{Password} )
         {
             return $Self->ReturnError(
-                ErrorCode    => "$Self->{OperationName}.MissingParameter",
-                ErrorMessage => "$Self->{OperationName}: Password or SessionID is required!",
+                ErrorCode    => "$Self->{DebugPrefix}.MissingParameter",
+                ErrorMessage => "$Self->{DebugPrefix}: Password or SessionID is required!",
             );
         }
     }
@@ -140,8 +140,8 @@ sub Run {
 
     if ( !$UserID ) {
         return $Self->ReturnError(
-            ErrorCode    => "$Self->{OperationName}.AuthFail",
-            ErrorMessage => "$Self->{OperationName}: User could not be authenticated!",
+            ErrorCode    => "$Self->{DebugPrefix}.AuthFail",
+            ErrorMessage => "$Self->{DebugPrefix}: User could not be authenticated!",
         );
     }
 
@@ -149,8 +149,8 @@ sub Run {
    	if ( !$Param{Data}->{CustomerUserID} )
     {
         return $Self->ReturnError(
-            ErrorCode    => "$Self->{OperationName}.MissingParameter",
-            ErrorMessage => "$Self->{OperationName}: CustomerUserID is required!",
+            ErrorCode    => "$Self->{DebugPrefix}.MissingParameter",
+            ErrorMessage => "$Self->{DebugPrefix}: CustomerUserID is required!",
         );
     }
 	
@@ -176,8 +176,8 @@ sub Run {
 	
 	if ( !scalar @CustomerUser ) {
         return $Self->ReturnError(
-            ErrorCode    => "$Self->{OperationName}.Operation failed",
-            ErrorMessage => "$Self->{OperationName}: CustomerUser Not Found",
+            ErrorCode    => "$Self->{DebugPrefix}.Operation failed",
+            ErrorMessage => "$Self->{DebugPrefix}: CustomerUser Not Found",
         );
     }
 	
