@@ -64,16 +64,16 @@ sub new {
 
 webservice REST configuration
 
-	NAME => CustomerUserSearch
-	OPERATION BACKEND => CustomerUser::CustomerUserSearch
-	
-	ROUTE MAPPING => /CustomerUserSearch
-	REQUEST METHOD => POST
+    NAME => CustomerUserSearch
+    OPERATION BACKEND => CustomerUser::CustomerUserSearch
+    
+    ROUTE MAPPING => /CustomerUserSearch
+    REQUEST METHOD => POST
 
 
 perform CustomerUserSearch Operation based on customer user profile.
-		
-	 my $Result = $OperationObject->Run(
+        
+     my $Result = $OperationObject->Run(
         Data => {
             UserLogin         => 'some agent login',                            # UserLogin or SessionID is
                                                                                 #   required
@@ -83,56 +83,56 @@ perform CustomerUserSearch Operation based on customer user profile.
                                                                                 #   Password is required
             CustomerUser => {
                 
-				# all search fields possible which are defined in CustomerUser::EnhancedSearchFields
-				UserLogin     => 'example*',                                    # (optional)
-				UserFirstname => 'Firstn*',                                     # (optional)
-		
-				# special parameters
-				CustomerCompanySearchCustomerIDs => [ 'example.com' ],          # (optional)
-				ExcludeUserLogins                => [ 'example', 'doejohn' ],   # (optional)
-		
-				# array parameters are used with logical OR operator (all values are possible which
-				are defined in the config selection hash for the field)
-				UserCountry              => [ 'Austria', 'Germany', ],          # (optional)
-		
-				# DynamicFields
-				#   At least one operator must be specified. Operators will be connected with AND,
-				#       values in an operator with OR.
-				#   You can also pass more than one argument to an operator: ['value1', 'value2']
-				DynamicField_FieldNameX => {
-					Equals            => 123,
-					Like              => 'value*',                # "equals" operator with wildcard support
-					GreaterThan       => '2001-01-01 01:01:01',
-					GreaterThanEquals => '2001-01-01 01:01:01',
-					SmallerThan       => '2002-02-02 02:02:02',
-					SmallerThanEquals => '2002-02-02 02:02:02',
-				}
-		
-				OrderBy => [ 'UserLogin', 'UserCustomerID' ],                   # (optional)
-				# ignored if the result type is 'COUNT'
-				# default: [ 'UserLogin' ]
-				# (all search fields possible which are defined in
-				CustomerUser::EnhancedSearchFields)
-		
-				# Additional information for OrderBy:
-				# The OrderByDirection can be specified for each OrderBy attribute.
-				# The pairing is made by the array indices.
-		
-				OrderByDirection => [ 'Down', 'Up' ],                          # (optional)
-				# ignored if the result type is 'COUNT'
-				# (Down | Up) Default: [ 'Down' ]
-		
-				Result => 'ARRAY' || 'COUNT',                                  # (optional)
-				# default: ARRAY, returns an array of change ids
-				# COUNT returns a scalar with the number of found changes
-		
-				Limit => 100,                                                  # (optional)
-				# ignored if the result type is 'COUNT'
+                # all search fields possible which are defined in CustomerUser::EnhancedSearchFields
+                UserLogin     => 'example*',                                    # (optional)
+                UserFirstname => 'Firstn*',                                     # (optional)
+        
+                # special parameters
+                CustomerCompanySearchCustomerIDs => [ 'example.com' ],          # (optional)
+                ExcludeUserLogins                => [ 'example', 'doejohn' ],   # (optional)
+        
+                # array parameters are used with logical OR operator (all values are possible which
+                are defined in the config selection hash for the field)
+                UserCountry              => [ 'Austria', 'Germany', ],          # (optional)
+        
+                # DynamicFields
+                #   At least one operator must be specified. Operators will be connected with AND,
+                #       values in an operator with OR.
+                #   You can also pass more than one argument to an operator: ['value1', 'value2']
+                DynamicField_FieldNameX => {
+                    Equals            => 123,
+                    Like              => 'value*',                # "equals" operator with wildcard support
+                    GreaterThan       => '2001-01-01 01:01:01',
+                    GreaterThanEquals => '2001-01-01 01:01:01',
+                    SmallerThan       => '2002-02-02 02:02:02',
+                    SmallerThanEquals => '2002-02-02 02:02:02',
+                }
+        
+                OrderBy => [ 'UserLogin', 'UserCustomerID' ],                   # (optional)
+                # ignored if the result type is 'COUNT'
+                # default: [ 'UserLogin' ]
+                # (all search fields possible which are defined in
+                CustomerUser::EnhancedSearchFields)
+        
+                # Additional information for OrderBy:
+                # The OrderByDirection can be specified for each OrderBy attribute.
+                # The pairing is made by the array indices.
+        
+                OrderByDirection => [ 'Down', 'Up' ],                          # (optional)
+                # ignored if the result type is 'COUNT'
+                # (Down | Up) Default: [ 'Down' ]
+        
+                Result => 'ARRAY' || 'COUNT',                                  # (optional)
+                # default: ARRAY, returns an array of change ids
+                # COUNT returns a scalar with the number of found changes
+        
+                Limit => 100,                                                  # (optional)
+                # ignored if the result type is 'COUNT'
             }
         },
     );
-	
-	
+    
+    
 =cut
 
 sub Run {
@@ -150,7 +150,7 @@ sub Run {
     }
 
 
-	# check needed stuff
+    # check needed stuff
     if (
         !$Param{Data}->{UserLogin}
         && !$Param{Data}->{SessionID}
@@ -176,8 +176,8 @@ sub Run {
 
     # authenticate user
     my ( $UserID, $UserType ) = $Self->Auth(%Param);
-	
-	if ( $UserType eq 'Customer' ) {
+    
+    if ( $UserType eq 'Customer' ) {
         return $Self->ReturnError(
             ErrorCode    => $Self->{DebugPrefix} . '.AuthFail',
             ErrorMessage => $Self->{DebugPrefix} . ": CustomerUsers can't search customer users details",
@@ -203,7 +203,7 @@ sub Run {
         }
     }
 
-	# isolate customer user parameter
+    # isolate customer user parameter
     my $CustomerUser = $Param{Data}->{CustomerUser};
 
     # remove leading and trailing spaces
@@ -217,33 +217,33 @@ sub Run {
             $CustomerUser->{$Attribute} =~ s{\s+\z}{};
         }
     }
-		
+        
     my $CustomerUserObject = $Kernel::OM->Get('Kernel::System::CustomerUser');
-	
-	#validation for searchable customeruserfield 
-	my @SeachFields = $CustomerUserObject->CustomerUserSearchFields(
+    
+    #validation for searchable customeruserfield 
+    my @SeachFields = $CustomerUserObject->CustomerUserSearchFields(
         Source => 'CustomerUser', 
     );
-	
-	my @FieldName;
-	for my $SeachField ( @SeachFields )
-	{
-		push @FieldName, $SeachField->{Name};	
-	}
-	
-	for my $ParamCU ( keys %{$CustomerUser} )
-	{	
-		next if grep(/^$ParamCU/i, @FieldName);
-		
-		return $Self->ReturnError(
+    
+    my @FieldName;
+    for my $SeachField ( @SeachFields )
+    {
+        push @FieldName, $SeachField->{Name};   
+    }
+    
+    for my $ParamCU ( keys %{$CustomerUser} )
+    {   
+        next if grep(/^$ParamCU/i, @FieldName);
+        
+        return $Self->ReturnError(
             ErrorCode    => $Self->{DebugPrefix} . '.Wrong Paremeter',
             ErrorMessage => $Self->{DebugPrefix} . ": CustomerUsers cant accept this $ParamCU paremeter ",
-			);
-		
-	}
-		
-	#search customer user	
-	my $CustomerUserIDsRef = $CustomerUserObject->CustomerSearchDetail(
+            );
+        
+    }
+        
+    #search customer user   
+    my $CustomerUserIDsRef = $CustomerUserObject->CustomerSearchDetail(
         %{ $Param{Data}->{CustomerUser} || {} }
     );
 
@@ -252,16 +252,16 @@ sub Run {
             ErrorCode    => $Self->{DebugPrefix} . '.Operation failed',
             ErrorMessage => $Self->{DebugPrefix} . ": Could not find customer user",
         );
-    }		
-	
-	 # return customer user data
-	return {
-		Success => 1,
-		Data    => {
-			CustomerUser => $CustomerUserIDsRef,
-		},
-	};
-		
+    }       
+    
+     # return customer user data
+    return {
+        Success => 1,
+        Data    => {
+            CustomerUser => $CustomerUserIDsRef,
+        },
+    };
+        
 }
 
 1;

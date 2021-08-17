@@ -64,16 +64,16 @@ sub new {
 
 webservice REST configuration
 
-	NAME => CustomerUserGet
-	OPERATION BACKEND => CustomerUser::CustomerUserGet
-	
-	ROUTE MAPPING => /CustomerUser/:CustomerUserID
-	REQUEST METHOD => GET
+    NAME => CustomerUserGet
+    OPERATION BACKEND => CustomerUser::CustomerUserGet
+    
+    ROUTE MAPPING => /CustomerUser/:CustomerUserID
+    REQUEST METHOD => GET
 
 
 perform CustomerUserGet Operation based on customer user username.
-		
-	 my $Result = $OperationObject->Run(
+        
+     my $Result = $OperationObject->Run(
         Data => {
             UserLogin         => 'some agent login',                            # UserLogin or SessionID is
                                                                                 #   required
@@ -81,12 +81,12 @@ perform CustomerUserGet Operation based on customer user username.
 
             Password  => 'some password',                                       # if UserLogin is sent then
                                                                                 #   Password is required            
-	
-			CustomerUserID     => 'example',                                    # customer user login required  
+    
+            CustomerUserID     => 'example',                                    # customer user login required  
         },
     );
-	
-	
+    
+    
 =cut
 
 sub Run {
@@ -104,7 +104,7 @@ sub Run {
     }
 
 
-	# check needed stuff
+    # check needed stuff
     if (
         !$Param{Data}->{UserLogin}
         && !$Param{Data}->{SessionID}
@@ -130,8 +130,8 @@ sub Run {
 
     # authenticate user
     my ( $UserID, $UserType ) = $Self->Auth(%Param);
-	
-	if ( $UserType eq 'Customer' ) {
+    
+    if ( $UserType eq 'Customer' ) {
         return $Self->ReturnError(
             ErrorCode    => $Self->{DebugPrefix} . '.AuthFail',
             ErrorMessage => $Self->{DebugPrefix} . ": CustomerUsers can't search customer users details",
@@ -146,49 +146,49 @@ sub Run {
     }
 
 
-   	if ( !$Param{Data}->{CustomerUserID} )
+    if ( !$Param{Data}->{CustomerUserID} )
     {
         return $Self->ReturnError(
             ErrorCode    => "$Self->{DebugPrefix}.MissingParameter",
             ErrorMessage => "$Self->{DebugPrefix}: CustomerUserID is required!",
         );
     }
-	
+    
     my $CustomerUserObject = $Kernel::OM->Get('Kernel::System::CustomerUser');
-	
-	my @CustomerUserIDs = split( /,/, $Param{Data}->{CustomerUserID} );
-	my @CustomerUser;
-		
-	for my $CustomerUserID (@CustomerUserIDs) 
-	{
-		
-		my %CU = $CustomerUserObject->CustomerUserDataGet(
-			User => $CustomerUserID,
-		);
-		
-		next if !$CU{UserLogin};
-		delete $CU{Config};
-		delete $CU{CompanyConfig};
-		delete $CU{UserPassword};
-	
-		push @CustomerUser, \%CU;
-	}
-	
-	if ( !scalar @CustomerUser ) {
+    
+    my @CustomerUserIDs = split( /,/, $Param{Data}->{CustomerUserID} );
+    my @CustomerUser;
+        
+    for my $CustomerUserID (@CustomerUserIDs) 
+    {
+        
+        my %CU = $CustomerUserObject->CustomerUserDataGet(
+            User => $CustomerUserID,
+        );
+        
+        next if !$CU{UserLogin};
+        delete $CU{Config};
+        delete $CU{CompanyConfig};
+        delete $CU{UserPassword};
+    
+        push @CustomerUser, \%CU;
+    }
+    
+    if ( !scalar @CustomerUser ) {
         return $Self->ReturnError(
             ErrorCode    => "$Self->{DebugPrefix}.Operation failed",
             ErrorMessage => "$Self->{DebugPrefix}: CustomerUser Not Found",
         );
     }
-	
+    
     # return customer user data
-	return {
-		Success => 1,
-		Data    => {
-			CustomerUser => \@CustomerUser,
-		},
-	};
-		
+    return {
+        Success => 1,
+        Data    => {
+            CustomerUser => \@CustomerUser,
+        },
+    };
+        
 }
 
 1;
