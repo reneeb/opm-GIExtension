@@ -82,6 +82,88 @@ Similar to the I<CustomerUser::DynamicFieldUpdate> operation, but for customers.
 
 Allows agents to add new customer users
 
+The JSON should look like
+
+    {
+        "UserLogin": "an_agent",
+        "Password": "agents_password",
+        "CustomerUser" : {
+            "UserFirstname"  : "Huber",
+            "UserLastname"   : "Manfred",
+            "UserLogin"      : "mhuber",
+            "UserCustomerID" : "12345",
+            "UserPassword"   : "some-pass",
+            "UserEmail"      : "email@example.com",
+            "ValidID"        : 1
+        }
+    }
+
+Which fields are available depends on your system configuration.
+
+=head2 CustomerUser::CustomerUserSearch
+
+Searches for customer users and returns a list of customer user IDs.
+
+    {
+        "UserLogin": "an_agent",
+        "Password": "agents_password",
+        "CustomerUser" : {
+            "UserLogin"     : "example*",
+            "UserFirstname" : "Firstn*",
+            "CustomerCompanySearchCustomerIDs" : [
+                "example.com"
+            ],
+            "ExcludeUserLogins" : [
+                "example", "doejohn"
+            ],
+            "UserCountry" : [
+                "Austria", "Germany"
+            ],
+            "DynamicField_FieldNameX" : {
+                "Equals"            : 123,
+                "Like"              : "value*",
+                "GreaterThan"       : "2001-01-01 01:01:01",
+                "GreaterThanEquals" : "2001-01-01 01:01:01",
+                "SmallerThan"       : "2002-02-02 02:02:02",
+                "SmallerThanEquals" : "2002-02-02 02:02:02"
+            }
+            "OrderBy" : [ "UserLogin", "UserCustomerID" ]
+        }
+    }
+
+See SysConfig option I<CustomerUser::EnhancedSearchFields> for a list of fields
+that can be searched.
+
+=head2 CustomerUser::CustomerUserGet
+
+Similar to the core I<Ticket::TicketGet> operation.
+
 =head2 User::UserAdd
 
-Allows agents to create new agents
+Allows agents to create new agents. Of course the permissions are checked.
+
+The JSON should look like
+
+    {
+        "UserLogin": "an_agent",
+        "Password": "agents_password",
+        "User" : {
+            "UserFirstname"  : "Huber",
+            "UserLastname"   : "Manfred",
+            "UserLogin"      : "mhuber",
+            "UserPassword"   : "some-pass",
+            "UserEmail"      : "email@example.com",
+            "ValidID"        : 1
+        }
+    }
+
+=head2 Session::SessionCheck
+
+Checks only if the given session id is valid. In contrast to the
+core I<Session::SessionGet> operation, this operation does B<not>
+return any session details.
+
+=head2 Session::SessionDelete
+
+Deletes a session. Needs only the session id as a parameter. Before the
+session is deleted, it is validated.
