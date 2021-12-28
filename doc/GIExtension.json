@@ -16,6 +16,7 @@
         "de": "Ein paar Verbesserungen für das GenericInterface"
     },
     "exclude_files" : [
-        "doc/GIExtension.json"
+        "doc/GIExtension.json",
+        "development/GIExtension.yml"
     ]
 }
