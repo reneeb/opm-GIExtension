@@ -193,7 +193,7 @@ sub Run {
 
 
     # check needed hashes
-    for my $Needed (qw(CustomerUser)) {
+    for my $Needed (qw(Search)) {
         if ( !IsHashRefWithData( $Param{Data}->{$Needed} ) ) {
             return $Self->ReturnError(
                 ErrorCode => "$Self->{DebugPrefix}.MissingParameter",
@@ -204,7 +204,7 @@ sub Run {
     }
 
     # isolate customer user parameter
-    my $CustomerUser = $Param{Data}->{CustomerUser};
+    my $CustomerUser = $Param{Data}->{Search};
 
     # remove leading and trailing spaces
     for my $Attribute ( sort keys %{$CustomerUser} ) {
@@ -236,9 +236,9 @@ sub Run {
         next if grep(/^$ParamCU/i, @FieldName);
         
         return $Self->ReturnError(
-            ErrorCode    => $Self->{DebugPrefix} . '.Wrong Paremeter',
-            ErrorMessage => $Self->{DebugPrefix} . ": CustomerUsers cant accept this $ParamCU paremeter ",
-            );
+            ErrorCode    => $Self->{DebugPrefix} . '.Wrong Parameter',
+            ErrorMessage => $Self->{DebugPrefix} . ": Search can't accept this $ParamCU parameter ",
+        );
         
     }
         

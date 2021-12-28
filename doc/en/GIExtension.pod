@@ -55,6 +55,93 @@ And the module looks like:
     
     1;
 
+=head2 CustomerCompany::DynamicFieldUpdate
+
+Similar to the I<CustomerUser::DynamicFieldUpdate> operation, but for customers.
+
+=head2 CustomerCompany::CustomerCompanyAdd
+
+Allows agents to add new customer users
+
+The JSON should look like
+
+    {
+        "UserLogin": "an_agent",
+        "Password": "agents_password",
+        "CustomerCompany" : {
+            "UserFirstname"  : "Huber",
+            "UserLastname"   : "Manfred",
+            "UserLogin"      : "mhuber",
+            "UserCustomerID" : "12345",
+            "UserPassword"   : "some-pass",
+            "UserEmail"      : "email@example.com",
+            "ValidID"        : 1
+        }
+    }
+
+Which fields are available depends on your system configuration.
+
+=head2 CustomerCompany::CustomerCompanyUpdate
+
+Allows agents to add new customer users
+
+The JSON should look like
+
+    {
+        "UserLogin": "an_agent",
+        "Password": "agents_password",
+        "CustomerCompanyID": 123,
+        "CustomerCompany" : {
+            "UserFirstname"  : "Huber",
+            "UserLastname"   : "Manfred",
+            "UserLogin"      : "mhuber",
+            "UserCustomerID" : "12345",
+            "UserPassword"   : "some-pass",
+            "UserEmail"      : "email@example.com",
+            "ValidID"        : 1
+        }
+    }
+
+Which fields are available depends on your system configuration.
+
+=head2 CustomerCompany::CustomerCompanySearch
+
+Searches for customer users and returns a list of customer user IDs.
+
+    {
+        "UserLogin": "an_agent",
+        "Password": "agents_password",
+        "CustomerCompany" : {
+            "UserLogin"     : "example*",
+            "UserFirstname" : "Firstn*",
+            "CustomerCompanySearchCustomerIDs" : [
+                "example.com"
+            ],
+            "ExcludeUserLogins" : [
+                "example", "doejohn"
+            ],
+            "UserCountry" : [
+                "Austria", "Germany"
+            ],
+            "DynamicField_FieldNameX" : {
+                "Equals"            : 123,
+                "Like"              : "value*",
+                "GreaterThan"       : "2001-01-01 01:01:01",
+                "GreaterThanEquals" : "2001-01-01 01:01:01",
+                "SmallerThan"       : "2002-02-02 02:02:02",
+                "SmallerThanEquals" : "2002-02-02 02:02:02"
+            }
+            "OrderBy" : [ "UserLogin", "UserCustomerID" ]
+        }
+    }
+
+See SysConfig option I<CustomerCompany::EnhancedSearchFields> for a list of fields
+that can be searched.
+
+=head2 CustomerCompany::CustomerCompanyGet
+
+Similar to the core I<Ticket::TicketGet> operation.
+
 =head2 CustomerUser::DynamicFieldUpdate
 
 Allows agents to update a dynamic field for a customer user
@@ -74,11 +161,29 @@ Then you can send this JSON to your OTRS:
     	}]
     }
 
-=head2 CustomerCompany::DynamicFieldUpdate
-
-Similar to the I<CustomerUser::DynamicFieldUpdate> operation, but for customers.
-
 =head2 CustomerUser::CustomerUserAdd
+
+Allows agents to add new customer users
+
+The JSON should look like
+
+    {
+        "UserLogin": "an_agent",
+        "Password": "agents_password",
+        "CustomerUser" : {
+            "UserFirstname"  : "Huber",
+            "UserLastname"   : "Manfred",
+            "UserLogin"      : "mhuber",
+            "UserCustomerID" : "12345",
+            "UserPassword"   : "some-pass",
+            "UserEmail"      : "email@example.com",
+            "ValidID"        : 1
+        }
+    }
+
+Which fields are available depends on your system configuration.
+
+=head2 CustomerUser::CustomerUserUpdate
 
 Allows agents to add new customer users
 
@@ -141,6 +246,25 @@ Similar to the core I<Ticket::TicketGet> operation.
 =head2 User::UserAdd
 
 Allows agents to create new agents. Of course the permissions are checked.
+
+The JSON should look like
+
+    {
+        "UserLogin": "an_agent",
+        "Password": "agents_password",
+        "User" : {
+            "UserFirstname"  : "Huber",
+            "UserLastname"   : "Manfred",
+            "UserLogin"      : "mhuber",
+            "UserPassword"   : "some-pass",
+            "UserEmail"      : "email@example.com",
+            "ValidID"        : 1
+        }
+    }
+
+=head2 User::UserUpdate
+
+Allows agents to update agents. Of course the permissions are checked.
 
 The JSON should look like
 

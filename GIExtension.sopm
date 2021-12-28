@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <!-- GENERATED WITH OTRS::OPM::Maker::Command::sopm (1.44) -->
+    <!-- GENERATED WITH OPM::Maker::Command::sopm (1.1.0) -->
     <Name>GIExtension</Name>
     <Version>6.0.6</Version>
     <Framework>6.0.x</Framework>
@@ -12,17 +12,23 @@
     <Filelist>
         <File Permission="644" Location="Kernel/Config/Files/XML/GIExtension.xml" />
         <File Permission="644" Location="Kernel/GenericInterface/Operation/CustomerCompany/Common.pm" />
+        <File Permission="644" Location="Kernel/GenericInterface/Operation/CustomerCompany/CustomerCompanyAdd.pm" />
+        <File Permission="644" Location="Kernel/GenericInterface/Operation/CustomerCompany/CustomerCompanyGet.pm" />
+        <File Permission="644" Location="Kernel/GenericInterface/Operation/CustomerCompany/CustomerCompanySearch.pm" />
+        <File Permission="644" Location="Kernel/GenericInterface/Operation/CustomerCompany/CustomerCompanyUpdate.pm" />
         <File Permission="644" Location="Kernel/GenericInterface/Operation/CustomerCompany/DynamicFieldUpdate.pm" />
         <File Permission="644" Location="Kernel/GenericInterface/Operation/CustomerUser/Common.pm" />
         <File Permission="644" Location="Kernel/GenericInterface/Operation/CustomerUser/CustomerUserAdd.pm" />
         <File Permission="644" Location="Kernel/GenericInterface/Operation/CustomerUser/CustomerUserGet.pm" />
         <File Permission="644" Location="Kernel/GenericInterface/Operation/CustomerUser/CustomerUserSearch.pm" />
+        <File Permission="644" Location="Kernel/GenericInterface/Operation/CustomerUser/CustomerUserUpdate.pm" />
         <File Permission="644" Location="Kernel/GenericInterface/Operation/CustomerUser/DynamicFieldUpdate.pm" />
         <File Permission="644" Location="Kernel/GenericInterface/Operation/Session/SessionCheck.pm" />
         <File Permission="644" Location="Kernel/GenericInterface/Operation/Session/SessionDelete.pm" />
         <File Permission="644" Location="Kernel/GenericInterface/Operation/Ticket/TicketGetFiltered.pm" />
         <File Permission="644" Location="Kernel/GenericInterface/Operation/User/Common.pm" />
         <File Permission="644" Location="Kernel/GenericInterface/Operation/User/UserAdd.pm" />
+        <File Permission="644" Location="Kernel/GenericInterface/Operation/User/UserUpdate.pm" />
         <File Permission="644" Location="doc/en/GIExtension.pod" />
     </Filelist>
 </otrs_package>

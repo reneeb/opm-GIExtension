@@ -195,6 +195,7 @@ sub Run {
     my $CustomerUserObject = $Kernel::OM->Get('Kernel::System::CustomerUser');
     my $UserLogin = $CustomerUserObject->CustomerUserAdd(
         %{ $Param{Data}->{CustomerUser} || {} },
+        Source => $Param{Data}->{Source} || 'CustomerUser',
         UserID => $UserID,
     );
 
@@ -202,6 +203,14 @@ sub Run {
         return $Self->ReturnError(
             ErrorCode    => $Self->{DebugPrefix} . '.Operation failed',
             ErrorMessage => $Self->{DebugPrefix} . ": Could not add customer user",
+        );
+    }
+
+    if ( $Param{Data}->{DynamicField} ) {
+        $Self->SaveDynamicFields(
+            %Param,
+            CustomerUserID => $UserLogin,
+            UserID         => $UserID,
         );
     }
 

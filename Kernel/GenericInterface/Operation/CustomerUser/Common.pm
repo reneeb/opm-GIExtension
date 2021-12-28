@@ -261,8 +261,174 @@ sub SetDynamicFieldValue {
     };
 }
 
+sub SaveDynamicFields {
+    my ( $Self, %Param ) = @_;
+
+    my $DynamicField;
+    my @DynamicFieldList;
+    if ( defined $Param{Data}->{DynamicField} ) {
+
+        # isolate DynamicField parameter
+        $DynamicField = $Param{Data}->{DynamicField};
+
+        # homogenate input to array
+        if ( ref $DynamicField eq 'HASH' ) {
+            push @DynamicFieldList, $DynamicField;
+        }
+        else {
+            @DynamicFieldList = @{$DynamicField};
+        }
+
+        # check DynamicField internal structure
+        for my $DynamicFieldItem (@DynamicFieldList) {
+            if ( !IsHashRefWithData($DynamicFieldItem) ) {
+                return {
+                    ErrorCode    => $Self->{DebugPrefix} . '.InvalidParameter',
+                    ErrorMessage => $Self->{DebugPrefix} . ": DynamicField parameter is invalid!",
+                };
+            }
+
+            # remove leading and trailing spaces
+            for my $Attribute ( sort keys %{$DynamicFieldItem} ) {
+                if ( ref $Attribute ne 'HASH' && ref $Attribute ne 'ARRAY' ) {
+
+                    #remove leading spaces
+                    $DynamicFieldItem->{$Attribute} =~ s{\A\s+}{};
+
+                    #remove trailing spaces
+                    $DynamicFieldItem->{$Attribute} =~ s{\s+\z}{};
+                }
+            }
+
+            # check DynamicField attribute values
+            my $DynamicFieldCheck = $Self->_CheckDynamicField(
+                DynamicField => $DynamicFieldItem,
+            );
+
+            if ( !$DynamicFieldCheck->{Success} ) {
+                return $Self->ReturnError( %{$DynamicFieldCheck} );
+            }
+        }
+    }
+
+    my $CustomerUserID     = $Param{CustomerUserID};
+    my $CustomerUserObject = $Kernel::OM->Get('Kernel::System::CustomerUser');
+
+    # set dynamic fields
+    for my $DynamicField ( @DynamicFieldList ) {
+        my $Result = $Self->SetDynamicFieldValue(
+            %{$DynamicField},
+            CustomerUserID => $CustomerUserID,
+            UserID         => $Param{UserID},
+        );
+
+        if ( !$Result->{Success} ) {
+            my $ErrorMessage =
+                $Result->{ErrorMessage} || "Dynamic Field $DynamicField->{Name} could not be set,"
+                . " please contact the system administrator";
+
+            return {
+                Success      => 0,
+                ErrorMessage => $ErrorMessage,
+            };
+        }
+    }
+
+    # return ticket data and article data
+    return {
+        Success => 1,
+        Data    => {
+            CustomerUserID => $CustomerUserID,
+        },
+    };
+}
+
+=begin Internal:
+
+=head2 _CheckDynamicField()
+
+checks if the given dynamic field parameter is valid.
+
+    my $DynamicFieldCheck = $OperationObject->_CheckDynamicField(
+        DynamicField => $DynamicField,              # all dynamic field parameters
+    );
+
+    returns:
+
+    $DynamicFieldCheck = {
+        Success => 1,                               # if everything is OK
+    }
+
+    $DynamicFieldCheck = {
+        ErrorCode    => 'Function.Error',           # if error
+        ErrorMessage => 'Error description',
+    }
+
+=cut
+
+sub _CheckDynamicField {
+    my ( $Self, %Param ) = @_;
+
+    my $DynamicField = $Param{DynamicField};
+    my $ArticleData  = $Param{Article};
+
+    my $Article;
+    if ( IsHashRefWithData($ArticleData) ) {
+        $Article = 1;
+    }
+
+    # check DynamicField item internally
+    for my $Needed (qw(Name Value)) {
+        if (
+            !defined $DynamicField->{$Needed}
+            || ( !IsString( $DynamicField->{$Needed} ) && ref $DynamicField->{$Needed} ne 'ARRAY' )
+            )
+        {
+            return {
+                ErrorCode    => $Self->{DebugPrefix} . '.MissingParameter',
+                ErrorMessage => $Self->{DebugPrefix} . ": DynamicField->$Needed parameter is missing!",
+            };
+        }
+    }
+
+    # check DynamicField->Name
+    if ( !$Self->ValidateDynamicFieldName( %{$DynamicField} ) ) {
+        return {
+            ErrorCode    => $Self->{DebugPrefix} . '.InvalidParameter',
+            ErrorMessage => $Self->{DebugPrefix} . ": DynamicField->Name parameter is invalid!",
+        };
+    }
+
+    # check objectType for dynamic field
+    if (
+        !$Self->ValidateDynamicFieldObjectType(
+            %{$DynamicField},
+        )
+        )
+    {
+        return {
+            ErrorCode    => $Self->{DebugPrefix} . '.MissingParameter',
+            ErrorMessage => $Self->{DebugPrefix} . ": Invalid dynamic field!",
+        };
+    }
+
+    # check DynamicField->Value
+    if ( !$Self->ValidateDynamicFieldValue( %{$DynamicField} ) ) {
+        return {
+            ErrorCode    => $Self->{DebugPrefix} . '.InvalidParameter',
+            ErrorMessage => $Self->{DebugPrefix} . ": DynamicField->Value parameter is invalid!",
+        };
+    }
+
+    # if everything is OK then return Success
+    return {
+        Success => 1,
+    };
+}
 
 1;
+
+=end Internal:
 
 =head1 TERMS AND CONDITIONS
 

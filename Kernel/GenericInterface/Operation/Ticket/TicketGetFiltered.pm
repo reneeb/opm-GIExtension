@@ -411,8 +411,9 @@ sub Run {
 
                 my $Object = $Kernel::OM->Get( $Module );
                 $TicketBundle = $Object->Run(
-                    Ticket => $TicketBundle,
-                    UserID => $UserID,
+                    WebserviceID => $Self->{WebserviceID},
+                    Ticket       => $TicketBundle,
+                    UserID       => $UserID,
                 );
             }
 # ---
