@@ -31,6 +31,9 @@
         <File Permission="644" Location="Kernel/GenericInterface/Operation/User/Common.pm" />
         <File Permission="644" Location="Kernel/GenericInterface/Operation/User/UserAdd.pm" />
         <File Permission="644" Location="Kernel/GenericInterface/Operation/User/UserUpdate.pm" />
+        <File Permission="644" Location="Kernel/GenericInterface/Transport/Run/Cmd.pm" />
+        <File Permission="644" Location="Kernel/Modules/AdminGenericInterfaceTransportRunCmd.pm" />
+        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AdminGenericInterfaceTransportRunCmd.tt" />
         <File Permission="644" Location="doc/en/GIExtension.pod" />
     </Filelist>
 </otrs_package>

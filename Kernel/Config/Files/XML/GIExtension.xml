@@ -208,4 +208,59 @@
         </Value>
     </Setting>
 
+   <Setting Name="GenericInterface::Transport::Module###Run::Cmd" Required="0" Valid="1">
+        <Description Translatable="1">GenericInterface module registration for the transport layer.</Description>
+        <Navigation>GenericInterface::Transport::ModuleRegistration</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Name">Cmd</Item>
+                <Item Key="Protocol">Run</Item>
+                <Item Key="ConfigDialog">AdminGenericInterfaceTransportRunCmd</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="Frontend::Module###AdminGenericInterfaceTransportRunCmd" Required="0" Valid="1">
+        <Description Translatable="1">Frontend module registration for the agent interface.</Description>
+        <Navigation>Frontend::Admin::ModuleRegistration</Navigation>
+        <Value>
+            <Item ValueType="FrontendRegistration">
+                <Hash>
+                    <Item Key="GroupRo">
+                        <Array>
+                        </Array>
+                    </Item>
+                    <Item Key="Group">
+                        <Array>
+                            <Item>admin</Item>
+                        </Array>
+                    </Item>
+                    <Item Key="Description">Admin</Item>
+                    <Item Key="Title" Translatable="1">GenericInterface TransportRunCmd GUI</Item>
+                    <Item Key="NavBarName"></Item>
+                </Hash>
+            </Item>
+        </Value>
+    </Setting>
+    <Setting Name="Loader::Module::AdminGenericInterfaceTransportRunCmd###002-GIExtension" Required="0" Valid="1">
+        <Description Translatable="1">Loader module registration for the agent interface.</Description>
+        <Navigation>Frontend::Admin::ModuleRegistration::Loader</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="CSS">
+                    <Array>
+                        <Item>Core.Agent.Admin.GenericInterface.css</Item>
+                        <Item>Core.Agent.SortedTree.css</Item>
+                    </Array>
+                </Item>
+                <Item Key="JavaScript">
+                    <Array>
+                       <Item>Core.Agent.Admin.GenericInterfaceTransportRunCmd.js</Item>
+                        <Item>Core.Agent.SortedTree.js</Item>
+                    </Array>
+                </Item>
+            </Hash>
+        </Value>
+    </Setting>
+
+
 </otrs_config>
