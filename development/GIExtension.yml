@@ -1,0 +1,168 @@
+---
+Debugger:
+  DebugThreshold: debug
+  TestMode: '0'
+Description: ''
+FrameworkVersion: 6.2.1
+Provider:
+  Operation:
+    CompanyAdd:
+      Description: ''
+      IncludeTicketData: '0'
+      Type: CustomerCompany::CustomerCompanyAdd
+    CompanyDynamicField:
+      Description: ''
+      IncludeTicketData: '0'
+      Type: CustomerCompany::DynamicFieldUpdate
+    CompanyGet:
+      Description: ''
+      IncludeTicketData: '0'
+      Type: CustomerCompany::CustomerCompanyGet
+    CompanySearch:
+      Description: ''
+      IncludeTicketData: '0'
+      Type: CustomerCompany::CustomerCompanySearch
+    CompanyUpdate:
+      Description: ''
+      IncludeTicketData: '0'
+      Type: CustomerCompany::CustomerCompanyUpdate
+    CustomerAdd:
+      Description: ''
+      IncludeTicketData: '0'
+      Type: CustomerUser::CustomerUserAdd
+    CustomerDynamicField:
+      Description: ''
+      IncludeTicketData: '0'
+      Type: CustomerUser::DynamicFieldUpdate
+    CustomerGet:
+      Description: ''
+      IncludeTicketData: '0'
+      Type: CustomerUser::CustomerUserGet
+    CustomerSearch:
+      Description: ''
+      IncludeTicketData: '0'
+      Type: CustomerUser::CustomerUserSearch
+    CustomerUpdate:
+      Description: ''
+      IncludeTicketData: '0'
+      Type: CustomerUser::CustomerUserUpdate
+    SessionCheck:
+      Description: ''
+      IncludeTicketData: '0'
+      Type: Session::SessionCheck
+    SessionCreate:
+      Description: ''
+      IncludeTicketData: '0'
+      Type: Session::SessionCreate
+    SessionDelete:
+      Description: ''
+      IncludeTicketData: '0'
+      Type: Session::SessionDelete
+    TicketGetFiltered:
+      Description: ''
+      IncludeTicketData: '0'
+      Type: Ticket::TicketGetFiltered
+    UserAdd:
+      Description: ''
+      IncludeTicketData: '0'
+      Type: User::UserAdd
+    UserUpdate:
+      Description: ''
+      IncludeTicketData: '0'
+      Type: User::UserUpdate
+  Transport:
+    Config:
+      AdditionalHeaders: ~
+      KeepAlive: ''
+      MaxLength: '100000'
+      RouteOperationMapping:
+        CompanyAdd:
+          ParserBackend: JSON
+          RequestMethod:
+          - POST
+          Route: /Company
+        CompanyDynamicField:
+          ParserBackend: JSON
+          RequestMethod:
+          - POST
+          Route: /CompanyDynamicField/:CustomerID
+        CompanyGet:
+          ParserBackend: JSON
+          RequestMethod:
+          - GET
+          Route: /Company/:CustomerID
+        CompanySearch:
+          ParserBackend: JSON
+          RequestMethod:
+          - POST
+          Route: /CompanySearch
+        CompanyUpdate:
+          ParserBackend: JSON
+          RequestMethod:
+          - PATCH
+          Route: /Company/:CustomerID
+        CustomerAdd:
+          ParserBackend: JSON
+          RequestMethod:
+          - POST
+          Route: /CustomerUser
+        CustomerDynamicField:
+          ParserBackend: JSON
+          RequestMethod:
+          - POST
+          Route: /CustomerUserDynamicField/:CustomerUserID
+        CustomerGet:
+          ParserBackend: JSON
+          RequestMethod:
+          - GET
+          Route: /CustomerUser/:CustomerUserID
+        CustomerSearch:
+          ParserBackend: JSON
+          RequestMethod:
+          - POST
+          Route: /CustomerUserSearch
+        CustomerUpdate:
+          ParserBackend: JSON
+          RequestMethod:
+          - PATCH
+          Route: /CustomerUser/:CustomerUserID
+        SessionCheck:
+          ParserBackend: JSON
+          RequestMethod:
+          - GET
+          Route: /Session/Check/:SessionID
+        SessionCreate:
+          ParserBackend: JSON
+          RequestMethod:
+          - POST
+          Route: /Session
+        SessionDelete:
+          ParserBackend: JSON
+          RequestMethod:
+          - GET
+          Route: /Session/Delete/:SessionID
+        TicketCreate:
+          ParserBackend: JSON
+          RequestMethod:
+          - POST
+          Route: /Ticket
+        TicketGetFiltered:
+          ParserBackend: JSON
+          RequestMethod:
+          - GET
+          Route: /Ticket/:TicketID
+        UserAdd:
+          ParserBackend: JSON
+          RequestMethod:
+          - POST
+          Route: /User
+        UserUpdate:
+          ParserBackend: JSON
+          RequestMethod:
+          - PATCH
+          Route: /User/:UserID
+    Type: HTTP::REST
+RemoteSystem: ''
+Requester:
+  Transport:
+    Type: ''
