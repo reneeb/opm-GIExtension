@@ -189,18 +189,22 @@ sub Run {
     my $CustomerCompanyObject = $Kernel::OM->Get('Kernel::System::CustomerCompany');
     
     #validation for searchable customeruserfield 
-    my @SearchFields = $CustomerCompanyObject->CustomerCompanySearchFields(
-        Source => 'CustomerCompany', 
-    );
+    my @SearchFields = $CustomerCompanyObject->CustomerCompanySearchFields();
     
     my @FieldName;
-    for my $SearchField ( @SearchFields )
-    {
-        push @FieldName, $SearchField->{Name};   
+
+    for my $SearchField ( @SearchFields ) {
+        my $Name = $SearchField->{Name};
+        push @FieldName, $Name;
+
+        if ( $SearchField->{Type} eq 'Selection' ) {
+            next if !exists $CustomerCompany->{$Name};
+            next if 'ARRAY' eq ref $CustomerCompany->{$Name};
+            $CustomerCompany->{$Name} = [ $CustomerCompany->{$Name} ];
+        }
     }
     
-    for my $ParamCU ( keys %{$CustomerCompany} )
-    {   
+    for my $ParamCU ( keys %{$CustomerCompany} ) {
         next if grep(/^$ParamCU/i, @FieldName);
         
         return $Self->ReturnError(
@@ -209,10 +213,10 @@ sub Run {
         );
         
     }
-        
+
     #search customer user   
     my $CustomerCompanyIDsRef = $CustomerCompanyObject->CustomerCompanySearchDetail(
-        %{ $Param{Data}->{CustomerCompany} || {} }
+        %{ $CustomerCompany || {} }
     );
 
     if ( !@{$CustomerCompanyIDsRef} ) {
