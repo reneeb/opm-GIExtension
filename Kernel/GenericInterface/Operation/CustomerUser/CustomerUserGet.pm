@@ -1,5 +1,5 @@
 # --
-# Copyright (C) 2021 - 2022 Perl-Services.de, https://perl-services.de
+# Copyright (C) 2021 - 2023 Perl-Services.de, https://perl-services.de
 # Copyright (C) 2021 mo-azfar, https://github.com/mo-azfar/otrs-GIExtension
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
