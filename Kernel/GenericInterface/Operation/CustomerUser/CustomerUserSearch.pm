@@ -193,7 +193,7 @@ sub Run {
 
 
     # check needed hashes
-    for my $Needed (qw(Search)) {
+    for my $Needed (qw(CustomerUser)) {
         if ( !IsHashRefWithData( $Param{Data}->{$Needed} ) ) {
             return $Self->ReturnError(
                 ErrorCode => "$Self->{DebugPrefix}.MissingParameter",
@@ -204,7 +204,7 @@ sub Run {
     }
 
     # isolate customer user parameter
-    my $CustomerUser = $Param{Data}->{Search};
+    my $CustomerUser = $Param{Data}->{CustomerUser};
 
     # remove leading and trailing spaces
     for my $Attribute ( sort keys %{$CustomerUser} ) {
